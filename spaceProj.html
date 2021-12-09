@@ -145,7 +145,106 @@
         }
     </script>
     <script>
+	
+		function multiply(a, b) {
+			var aNumRows = a.length, aNumCols = a[0].length,
+				bNumRows = b.length, bNumCols = b[0].length,
+				m = new Array(aNumRows);
+			for (var r = 0; r < aNumRows; ++r) {
+				m[r] = new Array(bNumCols);
+				for (var c = 0; c < bNumCols; ++c) {
+					m[r][c] = 0;
+					for (var i = 0; i < aNumCols; ++i) {
+						m[r][c] += a[r][i] * b[i][c];
+					}
+				}
+			}
+			return m;
+		}
+	
+	
+		var canvas = document.getElementById("c");
+	
+		var canvasIsPressed = false;
+		var earthTarget = false;
+		var xMove = 0;
+		var yMove = 0;
+		var eyeV = [[0],[0],[-10],[1]];
+		var xRot;
+		var yRot;
+		var rTrans
+		var trans;
+		var rot;
+		var tar = [[0],[0],[0]];
+		var lastPressX;
+		var lastPressY;
+		
+		
+		window.onkeypress = function (e) {
+			switch(e.key) {
+				case "1":
+					earthTarget = true;
+					break;
+				case "2":
+					tar[0][0] = 0;
+					tar[1][0] = 0;
+					tar[2][0] = 0;
+					earthTarget = false;
+					break;
+				case "d":
+					eyeV[0][0] = 0;
+					eyeV[1][0] = 0;
+					eyeV[2][0] = -10;
+					break;
+			}
+		}
+		
+        canvas.addEventListener("mousedown", handleMouseDown);
+		function handleMouseDown(e) {
+			canvasIsPressed = true;
+			lastPressX = e.pageX;
+			lastPressY = e.pageY;
+
+            canvas.removeEventListener("mousedown", handleMouseDown);
+            canvas.addEventListener("mouseup", handleMouseUp);
+            canvas.addEventListener("mouseout", handleMouseOut);
+            canvas.addEventListener("mousemove", handleMouseMove);
+		}
+        function handleMouseMove(e){
+            if (canvasIsPressed) {
+                
+                xMove = -1*((e.pageX - lastPressX))/200;
+                yMove = -1*((e.pageY - lastPressY))/200;
+                trans = [[1,0,0,tar[0][0]],[0,1,0,tar[1][0]],[0,0,1,tar[2][0]],[0,0,0,1]];
+                rTrans = [[1,0,0,-1*tar[0][0]],[0,1,0,-1*tar[1][0]],[0,0,1,-1*tar[2][0]],[0,0,0,1]];
+                xRot = [[1,0,0,0],[0,Math.cos(yMove), -1*Math.sin(yMove),0],[0,Math.sin(yMove),Math.cos(yMove),0],[0,0,0,1]];
+                yRot = [[Math.cos(xMove),0,Math.sin(xMove),0],[0,1,0,0],[-1*Math.sin(xMove),0,Math.cos(xMove),0],[0,0,0,1]];
+                rot = multiply(xRot,yRot);
+                rot = multiply(trans,rot);
+                rot = multiply(rot,rTrans);
+                eyeV = multiply(rot,eyeV);
+            
+                lastPressX = e.pageX;
+                lastPressY = e.pageY;
+            }
+        }
+		function handleMouseUp() {
+			canvasIsPressed = false;
+            canvas.removeEventListener("mousemove", handleMouseMove);
+            canvas.addEventListener("mousedown", handleMouseDown);
+            canvas.addEventListener("mousedown", handleMouseDown);
+		}
+		function handleMouseOut() {
+			canvasIsPressed = false;
+            canvas.removeEventListener("mousemove", handleMouseMove);
+            canvas.removeEventListener("mouseup", handleMouseUp);
+            canvas.removeEventListener("mouseout", handleMouseOut);
+            canvas.addEventListener("mousedown", handleMouseDown);
+		}
+	
+	
         const m4 = twgl.m4;
+		const v3 = twgl.v3;
         const gl = document.querySelector("#c").getContext("webgl");
 
         const objects = [];
@@ -425,8 +524,8 @@
             const zFar = 100;
             const projection = m4.perspective(fov, aspect, zNear, zFar);
 
-            const eye = [0, 0, -10];
-            const target = [0, 0, 0];
+            const eye = [eyeV[0][0], eyeV[1][0], eyeV[2][0]];
+            const target = [tar[0][0], tar[1][0], tar[2][0]];
             const up = [0, 1, 0];
 
             const camera = m4.lookAt(eye, target, up);
@@ -465,6 +564,13 @@
                     if (obj.ID == "earth"){
                         m4.rotateZ(world, .2, world);//earth's weird angle
                         m4.rotateY(world, time * obj.ySpeed * 1000, world);//rotation from earth's axis
+						if(earthTarget == true){
+							var currT = v3.create();
+							m4.getTranslation(world,currT);
+							tar[0][0] = currT[0];
+							tar[1][0] = currT[1];
+							tar[2][0] = currT[2];
+						}
                     }
                     if (obj.ID == "mars"){
                         m4.rotateY(world, time * obj.ySpeed * 2000, world);//rotation from mars's axis
