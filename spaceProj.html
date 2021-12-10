@@ -246,7 +246,7 @@
             canvas.addEventListener("mousedown", handleMouseDown);
 		}
         function handleWheel(e) {
-            zMove = -1*e.deltaY*200;
+            zMove = -1*e.deltaY*200000;
             
             dVect[0][0] = tar[0][0] - eyeV[0][0];
             dVect[1][0] = tar[1][0] - eyeV[1][0];
