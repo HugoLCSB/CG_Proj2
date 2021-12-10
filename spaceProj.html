@@ -172,10 +172,13 @@
 		var eyeV = [[0],[0],[-10],[1]];
 		var xRot;
 		var yRot;
+        var xUp = 0;
+		var yUp = 1;
 		var rTrans
 		var trans;
 		var rot;
 		var tar = [[0],[0],[0]];
+        var dVect = [[0],[0],[0]];
 		var lastPressX;
 		var lastPressY;
 		
@@ -200,6 +203,7 @@
 		}
 		
         canvas.addEventListener("mousedown", handleMouseDown);
+        canvas.addEventListener("wheel", handleWheel);
 		function handleMouseDown(e) {
 			canvasIsPressed = true;
 			lastPressX = e.pageX;
@@ -241,6 +245,23 @@
             canvas.removeEventListener("mouseout", handleMouseOut);
             canvas.addEventListener("mousedown", handleMouseDown);
 		}
+        function handleWheel(e) {
+            zMove = -1*e.deltaY*0.0002;
+            
+            dVect[0][0] = tar[0][0] - eyeV[0][0];
+            dVect[1][0] = tar[1][0] - eyeV[1][0];
+            dVect[2][0] = tar[2][0] - eyeV[2][0];
+            
+            eyeV[0][0] = eyeV[0][0] + (dVect[0][0]*zMove);
+            eyeV[1][0] = eyeV[1][0] + (dVect[1][0]*zMove);
+            eyeV[2][0] = eyeV[2][0] + (dVect[2][0]*zMove);
+            console.log("Eye Test Begin");
+            console.log(eyeV[0][0]);
+            console.log(eyeV[1][0]);
+            console.log(eyeV[2][0]);
+            console.log(zMove);
+            console.log("Eye Test End");
+        }
 	
 	
         const m4 = twgl.m4;
@@ -526,7 +547,8 @@
 
             const eye = [eyeV[0][0], eyeV[1][0], eyeV[2][0]];
             const target = [tar[0][0], tar[1][0], tar[2][0]];
-            const up = [0, 1, 0];
+            //const up = [0, 1, 0];
+            const up = [xUp, yUp, 0];
 
             const camera = m4.lookAt(eye, target, up);
             const view = m4.inverse(camera);
