@@ -565,15 +565,15 @@
                     var y = 0.001;
                     var z = 0;
                 }
-                if(i == 8){
+                /*if(i == 8){
                     id = "saturn_orbit";
                     programInfo = twgl.createProgramInfo(gl, [V, F]);
-                    bufferInfo = twgl.primitives.createPlaneBufferInfo(gl, 10,10);
+                    bufferInfo = twgl.primitives.createPlaneBufferInfo(gl, 9,9);
 
                     const tex = twgl.createTexture(gl, {
                         mag: gl.NEAREST,
                         min: gl.NEAREST,
-                        src:"textures/orbit.png",
+                        src:"textures/saturn_rings.png",
                     });
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
@@ -586,8 +586,8 @@
                     var t = [0, 0, 0];
                     var y = 0;
                     var z = 0;
-                }
-                if(i == 9){
+                }*/
+                if(i == 8){
                     id = "background";
                     programInfo = twgl.createProgramInfo(gl, ["vs-b", "fs-b"]);
                     bufferInfo = twgl.primitives.createXYQuadBufferInfo(gl);
