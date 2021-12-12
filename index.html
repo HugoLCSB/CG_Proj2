@@ -152,7 +152,7 @@
 
             //ambiente
             if(u_lightMode == 2){
-                outColor = vec4((u_lightColor * (u_ambient)).rgb,
+                outColor = vec4((u_lightColor * (u_ambient * diffuseColor)).rgb,
                                 1.0);
             }
 
@@ -164,7 +164,7 @@
 
             //especular
             if(u_lightMode == 4){
-                outColor = vec4((u_lightColor * (u_specular * litR.z * u_specularFactor)).rgb,
+                outColor = vec4((u_lightColor * (diffuseColor * u_specular * litR.z * u_specularFactor)).rgb,
                                 1.0);
             }
 
@@ -248,7 +248,7 @@
 
             //ambiente
             if(u_lightMode == 2){
-                outColor = vec4((u_lightColor * (u_ambient)).rgb,
+                outColor = vec4((u_lightColor * (u_ambient * diffuseColor)).rgb,
                                 1.0);
             }
 
@@ -260,7 +260,7 @@
 
             //especular
             if(u_lightMode == 4){
-                outColor = vec4((u_lightColor * (u_specular * litR.z * u_specularFactor)).rgb,
+                outColor = vec4((u_lightColor * (diffuseColor * u_specular * litR.z * u_specularFactor)).rgb,
                                 1.0);
             }
 
