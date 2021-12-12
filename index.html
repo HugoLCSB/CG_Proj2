@@ -152,21 +152,19 @@
 
             //ambiente
             if(u_lightMode == 2){
-                outColor = vec4((u_lightColor * (litR.y + u_ambient +
-                                litR.z)).rgb,
+                outColor = vec4((u_lightColor * (u_ambient)).rgb,
                                 1.0);
             }
 
             //difusa
             if(u_lightMode == 3){
-                outColor = vec4((u_lightColor * (diffuseColor * litR.y + diffuseColor)).rgb,
+                outColor = vec4((u_lightColor * (diffuseColor * litR.y)).rgb,
                                 diffuseColor.a);
             }
 
             //especular
             if(u_lightMode == 4){
-                outColor = vec4((u_lightColor * (litR.y +
-                                u_specular * litR.z * u_specularFactor)).rgb,
+                outColor = vec4((u_lightColor * (u_specular * litR.z * u_specularFactor)).rgb,
                                 1.0);
             }
 
@@ -250,21 +248,19 @@
 
             //ambiente
             if(u_lightMode == 2){
-                outColor = vec4((u_lightColor * (litR.y + u_ambient +
-                                litR.z)).rgb,
+                outColor = vec4((u_lightColor * (u_ambient)).rgb,
                                 1.0);
             }
 
             //difusa
             if(u_lightMode == 3){
-                outColor = vec4((u_lightColor * (diffuseColor * litR.y + diffuseColor)).rgb,
+                outColor = vec4((u_lightColor * (diffuseColor * litR.y)).rgb,
                                 diffuseColor.a);
             }
 
             //especular
             if(u_lightMode == 4){
-                outColor = vec4((u_lightColor * (litR.y +
-                                u_specular * litR.z * u_specularFactor)).rgb,
+                outColor = vec4((u_lightColor * (u_specular * litR.z * u_specularFactor)).rgb,
                                 1.0);
             }
 
@@ -348,10 +344,12 @@
                     if(V == "vs"){
                         V = "vs-g"
                         F = "fs-g"
+                        console.log("gouraud");
                     }
                     else{
                         V = "vs"
                         F = "fs"
+                        console.log("phong");
                     }
                     cancelAnimationFrame(id_Render);
                     objects = [];
@@ -377,11 +375,11 @@
                     render(time);
                     break;
                 case "m":
-                    if(lightMode == 0){
-                        lightMode ++;
+                    if(lightMode == 4){
+                        lightMode =0;
                     }
-                    else if(lightMode == 5){
-                        lightMode = 0;
+                    else{
+                        lightMode ++;
                     }
                     cancelAnimationFrame(id_Render);
                     objects = [];
@@ -391,8 +389,23 @@
                     }
                     elms();
                     render(time);
-                    lightMode ++;
-                    console.log(lightMode);
+                    switch(lightMode){
+                        case 0:
+                            console.log("normal");
+                            break;
+                        case 1:
+                            console.log("ambient + diffuse");
+                            break;
+                        case 2:
+                            console.log("ambient");
+                            break;
+                        case 3:
+                            console.log("diffuse");
+                            break;
+                        case 4:
+                            console.log("specular");
+                            break;
+                    }
                     break;
 			}
 		}
@@ -451,10 +464,10 @@
             eyeV[1][0] = eyeV[1][0] + (dVect[1][0]*zMove);
             eyeV[2][0] = eyeV[2][0] + (dVect[2][0]*zMove);
 
-            console.log(eyeV[0][0]);
+            /*console.log(eyeV[0][0]);
             console.log(eyeV[1][0]);
             console.log(eyeV[2][0]);
-            console.log(zMove);
+            console.log(zMove);*/
         }
 	
 	
@@ -481,9 +494,9 @@
                     u_lightWorldPos: [0, 0, 0],
                     u_lightColor: [],
                     u_ambient: [],
-                    u_specular: [],
-                    u_shininess: 0,
-                    u_specularFactor: 0,
+                    u_specular: [1, 1, 1, 1],
+                    u_shininess: 128,
+                    u_specularFactor: 1,
                     u_diffuse: null,
 
                     u_viewInverse: m4.identity(),
@@ -507,8 +520,6 @@
 
                     uniforms.u_lightColor = [1, 0.8, 0.8, 1];
                     uniforms.u_ambient = [1, 1, 0.8, 1];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
                     uniforms.u_specularFactor = 1,
                     uniforms.u_diffuse = tex;
 
@@ -529,9 +540,6 @@
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
                     uniforms.u_ambient = [0.6, 0.6, 0.6, 0];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
-                    uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
                     var t = [4.7, 0, 0];
@@ -551,9 +559,6 @@
 
                     uniforms.u_lightColor = [.8, 1, 1, 1];
                     uniforms.u_ambient = [0.6, 0.6, 0.6, 0];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
-                    uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
                     var t = [5.5, 0, 0];
@@ -573,9 +578,6 @@
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
                     uniforms.u_ambient = [0.5, 0.5, 0.5, 0];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
-                    uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
                     var t = [6.2, 0, 0];
@@ -595,9 +597,6 @@
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
                     uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
-                    uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
                     var t = [6.2, 0, 0];
@@ -617,9 +616,6 @@
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
                     uniforms.u_ambient = [0.5, 0.5, 0.5, 0];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
-                    uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
                     var t = [7, 0, 0];
@@ -639,9 +635,6 @@
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
                     uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
-                    uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
                     var t = [10, 0, 0];
@@ -661,9 +654,6 @@
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
                     uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
-                    uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
                     var t = [12.5, 0, 0];
@@ -683,9 +673,6 @@
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
                     uniforms.u_ambient = [0.5, 0.5, 0.5, 1];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
-                    uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
                     var t = [12.5, 0, 0];
@@ -705,9 +692,6 @@
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
                     uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
-                    uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
                     var t = [15, 0, 0];
@@ -732,9 +716,6 @@
 
                     uniforms.u_lightColor = [.2, .2, .2, .5];
                     uniforms.u_ambient = [0.2, 0.2, 0.2, 0];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
-                    uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
                     var t = [15, 0, 0];
@@ -759,9 +740,6 @@
 
                     uniforms.u_lightColor = [.2, .2, .2, .5];
                     uniforms.u_ambient = [0.2, 0.2, 0.2, 0];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
-                    uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
                     var t = [15, 0, 0];
@@ -786,9 +764,6 @@
 
                     uniforms.u_lightColor = [.2, .2, .2, .5];
                     uniforms.u_ambient = [0.2, 0.2, 0.2, 0];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
-                    uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
                     var t = [15, 0, 0];
@@ -808,9 +783,6 @@
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
                     uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
-                    uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
                     var t = [17, 0, 0];
@@ -830,9 +802,6 @@
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
                     uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
-                    uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
                     var t = [18, 0, 0];
