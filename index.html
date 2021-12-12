@@ -248,7 +248,7 @@
 		var earthTarget = false;
 		var xMove = 0;
 		var yMove = 0;
-		var eyeV = [[0],[0],[-10],[1]];
+		var eyeV = [[0],[0],[-25],[1]];
 		var xRot;
 		var yRot;
         var xUp = 0;
@@ -279,7 +279,7 @@
 				case "d":
 					eyeV[0][0] = 0;
 					eyeV[1][0] = 0;
-					eyeV[2][0] = -10;
+					eyeV[2][0] = -25;
 					break;
                 case "s":
                     if(V == "vs"){
@@ -383,8 +383,8 @@
 
         var objects = [];
         var drawObjects = [];
-        const numObjects = 10;
-        const numOrbits = 7;
+        const numObjects = 13;
+        const numOrbits = 10;
 
         const viewDirection = m4.identity();
         const viewDirectionProjection = m4.identity();
@@ -414,12 +414,12 @@
                 if(i == 0){
                     id = "sun";
                     programInfo = twgl.createProgramInfo(gl, [V, F]);
-                    bufferInfo = twgl.primitives.createSphereBufferInfo(gl, 2, 48, 24);
+                    bufferInfo = twgl.primitives.createSphereBufferInfo(gl, 4, 48, 24);
 
                     const tex = twgl.createTexture(gl, {
                         min: gl.NEAREST,
                         mag: gl.NEAREST,
-                        src:"textures/sun.png",
+                        src:"textures/sun.jpg",
                     });
 
                     uniforms.u_lightColor = [1, 0.8, 0.8, 1];
@@ -451,7 +451,7 @@
                     uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
-                    var t = [2.25, 0, 0];
+                    var t = [4.7, 0, 0];
                     var y = 0.05;
                     var z = 0;
                 }
@@ -473,7 +473,7 @@
                     uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
-                    var t = [2.8, 0, 0];
+                    var t = [5.5, 0, 0];
                     var y = 0.02;
                     var z = 0;
                 }
@@ -495,7 +495,7 @@
                     uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
-                    var t = [3.5, 0, 0];
+                    var t = [6.2, 0, 0];
                     var y = 0.01;
                     var z = 0;
                 }
@@ -517,7 +517,7 @@
                     uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
-                    var t = [3.5, 0, 0];
+                    var t = [6.2, 0, 0];
                     var y = 0.01;
                     var z = 0;
                 }
@@ -539,14 +539,14 @@
                     uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
-                    var t = [4.3, 0, 0];
+                    var t = [7, 0, 0];
                     var y = 0.005;
                     var z = 0;
                 }
                 if(i == 6){
                     id = "jupiter";
                     programInfo = twgl.createProgramInfo(gl, [V, F]);
-                    bufferInfo = twgl.primitives.createSphereBufferInfo(gl, .7, 48, 24);
+                    bufferInfo = twgl.primitives.createSphereBufferInfo(gl, .8, 48, 24);
 
                     const tex = twgl.createTexture(gl, {
                         min: gl.NEAREST,
@@ -561,7 +561,7 @@
                     uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
-                    var t = [5, 0, 0];
+                    var t = [10, 0, 0];
                     var y = 0.001;
                     var z = 0;
                 }
@@ -583,7 +583,7 @@
                     uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
-                    var t = [6, 0, 0];
+                    var t = [12.5, 0, 0];
                     var y = 0.001;
                     var z = 0;
                 }
@@ -605,11 +605,77 @@
                     uniforms.u_specularFactor = 0.1;
                     uniforms.u_diffuse = tex;
 
-                    var t = [6, 0, 0];
+                    var t = [12.5, 0, 0];
                     var y = 0.001;
                     var z = 0;
                 }
                 if(i == 9){
+                    id = "uranus";
+                    programInfo = twgl.createProgramInfo(gl, [V, F]);
+                    bufferInfo = twgl.primitives.createSphereBufferInfo(gl, .45, 48, 24);
+
+                    const tex = twgl.createTexture(gl, {
+                        min: gl.NEAREST,
+                        mag: gl.NEAREST,
+                        src:"textures/uranus.jpg",
+                    });
+
+                    uniforms.u_lightColor = [1, 1, 1, 1];
+                    uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
+                    uniforms.u_specular = [1, 1, 1, 1];
+                    uniforms.u_shininess = 50;
+                    uniforms.u_specularFactor = 0.1;
+                    uniforms.u_diffuse = tex;
+
+                    var t = [15, 0, 0];
+                    var y = 0.001;
+                    var z = 0;
+                }
+                if(i == 10){
+                    id = "netptune";
+                    programInfo = twgl.createProgramInfo(gl, [V, F]);
+                    bufferInfo = twgl.primitives.createSphereBufferInfo(gl, .3, 48, 24);
+
+                    const tex = twgl.createTexture(gl, {
+                        min: gl.NEAREST,
+                        mag: gl.NEAREST,
+                        src:"textures/neptune.jpg",
+                    });
+
+                    uniforms.u_lightColor = [1, 1, 1, 1];
+                    uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
+                    uniforms.u_specular = [1, 1, 1, 1];
+                    uniforms.u_shininess = 50;
+                    uniforms.u_specularFactor = 0.1;
+                    uniforms.u_diffuse = tex;
+
+                    var t = [17, 0, 0];
+                    var y = 0.001;
+                    var z = 0;
+                }
+                if(i == 11){
+                    id = "pluto";
+                    programInfo = twgl.createProgramInfo(gl, [V, F]);
+                    bufferInfo = twgl.primitives.createSphereBufferInfo(gl, .02, 48, 24);
+
+                    const tex = twgl.createTexture(gl, {
+                        min: gl.NEAREST,
+                        mag: gl.NEAREST,
+                        src:"textures/pluto.jpg",
+                    });
+
+                    uniforms.u_lightColor = [1, 1, 1, 1];
+                    uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
+                    uniforms.u_specular = [1, 1, 1, 1];
+                    uniforms.u_shininess = 50;
+                    uniforms.u_specularFactor = 0.1;
+                    uniforms.u_diffuse = tex;
+
+                    var t = [18, 0, 0];
+                    var y = 0.001;
+                    var z = 0;
+                }
+                if(i == 12){
                     id = "background";
                     programInfo = twgl.createProgramInfo(gl, ["vs-b", "fs-b"]);
                     bufferInfo = twgl.primitives.createXYQuadBufferInfo(gl);
@@ -656,14 +722,25 @@
                 var bufferInfo;
                 var id;
 
+                const tex = twgl.createTexture(gl, {
+                        mag: gl.NEAREST,
+                        min: gl.LINEAR,
+                        src: [
+                            255,255,255,255,
+                            255,255,255,255,
+                            255,255,255,255,
+                            255,255,255,255,
+                        ],
+                    });
+
                 var uniforms = {
                     u_lightWorldPos: [0, 0, 0],
-                    u_lightColor: [],
-                    u_ambient: [],
-                    u_specular: [],
-                    u_shininess: 0,
-                    u_specularFactor: 0,
-                    u_diffuse: null,
+                    u_lightColor: [1, 1, 1, 1],
+                    u_ambient: [1, 1, 1, 1],
+                    u_specular: [1, 1, 1, 1],
+                    u_shininess: 50,
+                    u_specularFactor: 0.1,
+                    u_diffuse: tex,
 
                     u_viewInverse: m4.identity(),
                     u_world: m4.identity(),
@@ -674,26 +751,8 @@
                 if(i == 0){
                     id = "mercury_orbit";
                     programInfo = twgl.createProgramInfo(gl, [V, F]);
-                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 2.25,64,0,2.24);
-
-                    const tex = twgl.createTexture(gl, {
-                        mag: gl.NEAREST,
-                        min: gl.LINEAR,
-                        src: [
-                            255,255,255,255,
-                            255,255,255,255,
-                            255,255,255,255,
-                            255,255,255,255,
-                        ],
-                    });
-
-                    uniforms.u_lightColor = [1, 1, 1, 1];
-                    uniforms.u_ambient = [0.5, 0.5, 0.5, 1];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
-                    uniforms.u_specularFactor = 0.1;
-                    uniforms.u_diffuse = tex;
-
+                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 4.71,64,0,4.68);
+                   
                     var t = [0, 0, 0];
                     var y = 0;
                     var z = 0;
@@ -701,25 +760,7 @@
                 if(i == 1){
                     id = "venus_orbit";
                     programInfo = twgl.createProgramInfo(gl, [V, F]);
-                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 2.8,64,0,2.79);
-
-                    const tex = twgl.createTexture(gl, {
-                        mag: gl.NEAREST,
-                        min: gl.LINEAR,
-                        src: [
-                            255,255,255,255,
-                            255,255,255,255,
-                            255,255,255,255,
-                            255,255,255,255,
-                        ],
-                    });
-
-                    uniforms.u_lightColor = [1, 1, 1, 1];
-                    uniforms.u_ambient = [0.5, 0.5, 0.5, 1];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
-                    uniforms.u_specularFactor = 0.1;
-                    uniforms.u_diffuse = tex;
+                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 5.51,64,0,5.48);
 
                     var t = [0, 0, 0];
                     var y = 0;
@@ -728,25 +769,7 @@
                 if(i == 2){
                     id = "earth_orbit";
                     programInfo = twgl.createProgramInfo(gl, [V, F]);
-                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 3.5,64,0,3.49);
-
-                    const tex = twgl.createTexture(gl, {
-                        mag: gl.NEAREST,
-                        min: gl.LINEAR,
-                        src: [
-                            255,255,255,255,
-                            255,255,255,255,
-                            255,255,255,255,
-                            255,255,255,255,
-                        ],
-                    });
-
-                    uniforms.u_lightColor = [1, 1, 1, 1];
-                    uniforms.u_ambient = [0.5, 0.5, 0.5, 1];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
-                    uniforms.u_specularFactor = 0.1;
-                    uniforms.u_diffuse = tex;
+                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 6.21,64,0,6.18);
 
                     var t = [0, 0, 0];
                     var y = 0;
@@ -755,52 +778,16 @@
                 if(i == 3){
                     id = "moon_orbit";
                     programInfo = twgl.createProgramInfo(gl, [V, F]);
-                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, .31,64,0,0.30);
+                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 0.31,64,0,0.30);
 
-                    const tex = twgl.createTexture(gl, {
-                        mag: gl.NEAREST,
-                        min: gl.LINEAR,
-                        src: [
-                            255,255,255,255,
-                            255,255,255,255,
-                            255,255,255,255,
-                            255,255,255,255,
-                        ],
-                    });
-
-                    uniforms.u_lightColor = [1, 1, 1, 1];
-                    uniforms.u_ambient = [0.5, 0.5, 0.5, 1];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
-                    uniforms.u_specularFactor = 0.1;
-                    uniforms.u_diffuse = tex;
-
-                    var t = [3.5, 0, 0];
+                    var t = [6.2, 0, 0];
                     var y = 0.01;
                     var z = 0;
                 }
                 if(i == 4){
                     id = "mars_orbit";
                     programInfo = twgl.createProgramInfo(gl, [V, F]);
-                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 4.3,64,0,4.29);
-
-                    const tex = twgl.createTexture(gl, {
-                        mag: gl.NEAREST,
-                        min: gl.LINEAR,
-                        src: [
-                            255,255,255,255,
-                            255,255,255,255,
-                            255,255,255,255,
-                            255,255,255,255,
-                        ],
-                    });
-
-                    uniforms.u_lightColor = [1, 1, 1, 1];
-                    uniforms.u_ambient = [0.5, 0.5, 0.5, 1];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
-                    uniforms.u_specularFactor = 0.1;
-                    uniforms.u_diffuse = tex;
+                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 7.01,64,0,6.98);
 
                     var t = [0, 0, 0];
                     var y = 0;
@@ -809,25 +796,7 @@
                 if(i == 5){
                     id = "jupiter_orbit";
                     programInfo = twgl.createProgramInfo(gl, [V, F]);
-                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 5,64,0,4.99);
-
-                    const tex = twgl.createTexture(gl, {
-                        mag: gl.NEAREST,
-                        min: gl.LINEAR,
-                        src: [
-                            255,255,255,255,
-                            255,255,255,255,
-                            255,255,255,255,
-                            255,255,255,255,
-                        ],
-                    });
-
-                    uniforms.u_lightColor = [1, 1, 1, 1];
-                    uniforms.u_ambient = [0.5, 0.5, 0.5, 1];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
-                    uniforms.u_specularFactor = 0.1;
-                    uniforms.u_diffuse = tex;
+                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 10.01,64,0,9.98);
 
                     var t = [0, 0, 0];
                     var y = 0;
@@ -836,25 +805,34 @@
                 if(i == 6){
                     id = "saturn_orbit";
                     programInfo = twgl.createProgramInfo(gl, [V, F]);
-                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 6,64,0,5.99);
+                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 12.51,64,0,12.48);
 
-                    const tex = twgl.createTexture(gl, {
-                        mag: gl.NEAREST,
-                        min: gl.LINEAR,
-                        src: [
-                            255,255,255,255,
-                            255,255,255,255,
-                            255,255,255,255,
-                            255,255,255,255,
-                        ],
-                    });
+                    var t = [0, 0, 0];
+                    var y = 0;
+                    var z = 0;
+                }
+                if(i == 7){
+                    id = "uranus_orbit";
+                    programInfo = twgl.createProgramInfo(gl, [V, F]);
+                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 15.01,64,0,14.98);
 
-                    uniforms.u_lightColor = [1, 1, 1, 1];
-                    uniforms.u_ambient = [0.5, 0.5, 0.5, 1];
-                    uniforms.u_specular = [1, 1, 1, 1];
-                    uniforms.u_shininess = 50;
-                    uniforms.u_specularFactor = 0.1;
-                    uniforms.u_diffuse = tex;
+                    var t = [0, 0, 0];
+                    var y = 0;
+                    var z = 0;
+                }
+                if(i == 8){
+                    id = "neptune_orbit";
+                    programInfo = twgl.createProgramInfo(gl, [V, F]);
+                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 17.01,64,0,16.98);
+
+                    var t = [0, 0, 0];
+                    var y = 0;
+                    var z = 0;
+                }
+                if(i == 9){
+                    id = "pluto_orbit";
+                    programInfo = twgl.createProgramInfo(gl, [V, F]);
+                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 18.02,64,0,17.99);
 
                     var t = [0, 0, 0];
                     var y = 0;
