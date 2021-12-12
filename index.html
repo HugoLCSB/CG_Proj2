@@ -383,7 +383,7 @@
 
         var objects = [];
         var drawObjects = [];
-        const numObjects = 9;
+        const numObjects = 10;
         const numOrbits = 7;
 
         const viewDirection = m4.identity();
@@ -485,7 +485,7 @@
                     const tex = twgl.createTexture(gl, {
                         min: gl.NEAREST,
                         mag: gl.NEAREST,
-                        src:"textures/world.jpg",
+                        src:"textures/earth.jpg",
                     });
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
@@ -544,6 +544,28 @@
                     var z = 0;
                 }
                 if(i == 6){
+                    id = "jupiter";
+                    programInfo = twgl.createProgramInfo(gl, [V, F]);
+                    bufferInfo = twgl.primitives.createSphereBufferInfo(gl, .7, 48, 24);
+
+                    const tex = twgl.createTexture(gl, {
+                        min: gl.NEAREST,
+                        mag: gl.NEAREST,
+                        src:"textures/jupiter.jpg",
+                    });
+
+                    uniforms.u_lightColor = [1, 1, 1, 1];
+                    uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
+                    uniforms.u_specular = [1, 1, 1, 1];
+                    uniforms.u_shininess = 50;
+                    uniforms.u_specularFactor = 0.1;
+                    uniforms.u_diffuse = tex;
+
+                    var t = [5, 0, 0];
+                    var y = 0.001;
+                    var z = 0;
+                }
+                if(i == 7){
                     id = "saturn";
                     programInfo = twgl.createProgramInfo(gl, [V, F]);
                     bufferInfo = twgl.primitives.createSphereBufferInfo(gl, .5, 48, 24);
@@ -565,7 +587,7 @@
                     var y = 0.001;
                     var z = 0;
                 }
-                if(i == 7){
+                if(i == 8){
                     id = "saturn_rings";
                     programInfo = twgl.createProgramInfo(gl, ["vs", "fs"]);
                     bufferInfo = twgl.primitives.createPlaneBufferInfo(gl, 2,2);
@@ -587,7 +609,7 @@
                     var y = 0.001;
                     var z = 0;
                 }
-                if(i == 8){
+                if(i == 9){
                     id = "background";
                     programInfo = twgl.createProgramInfo(gl, ["vs-b", "fs-b"]);
                     bufferInfo = twgl.primitives.createXYQuadBufferInfo(gl);
