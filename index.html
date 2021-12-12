@@ -383,7 +383,7 @@
 
         var objects = [];
         var drawObjects = [];
-        const numObjects = 13;
+        const numObjects = 16;
         const numOrbits = 10;
 
         const viewDirection = m4.identity();
@@ -562,7 +562,7 @@
                     uniforms.u_diffuse = tex;
 
                     var t = [10, 0, 0];
-                    var y = 0.001;
+                    var y = 0.0025;
                     var z = 0;
                 }
                 if(i == 7){
@@ -584,7 +584,7 @@
                     uniforms.u_diffuse = tex;
 
                     var t = [12.5, 0, 0];
-                    var y = 0.001;
+                    var y = 0.0020;
                     var z = 0;
                 }
                 if(i == 8){
@@ -606,7 +606,7 @@
                     uniforms.u_diffuse = tex;
 
                     var t = [12.5, 0, 0];
-                    var y = 0.001;
+                    var y = 0.0020;
                     var z = 0;
                 }
                 if(i == 9){
@@ -628,11 +628,92 @@
                     uniforms.u_diffuse = tex;
 
                     var t = [15, 0, 0];
-                    var y = 0.001;
+                    var y = 0.0012;
                     var z = 0;
                 }
                 if(i == 10){
-                    id = "netptune";
+                    id = "uranus_rings";
+                    programInfo = twgl.createProgramInfo(gl, [V, F]);
+                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, .65,64,0,0.6);
+
+                    const tex = twgl.createTexture(gl, {
+                        mag: gl.NEAREST,
+                        min: gl.LINEAR,
+                        src: [
+                            5,5,5,30,
+                            5,5,5,30,
+                            5,5,5,30,
+                            5,5,5,30,
+                        ],
+                    });
+
+                    uniforms.u_lightColor = [.2, .2, .2, .5];
+                    uniforms.u_ambient = [0.2, 0.2, 0.2, 0];
+                    uniforms.u_specular = [1, 1, 1, 1];
+                    uniforms.u_shininess = 50;
+                    uniforms.u_specularFactor = 0.1;
+                    uniforms.u_diffuse = tex;
+
+                    var t = [15, 0, 0];
+                    var y = 0.0012;
+                    var z = 0;
+                }
+                if(i == 11){
+                    id = "uranus_rings";
+                    programInfo = twgl.createProgramInfo(gl, [V, F]);
+                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, .57,64,0,0.54);
+
+                    const tex = twgl.createTexture(gl, {
+                        mag: gl.NEAREST,
+                        min: gl.LINEAR,
+                        src: [
+                            5,5,5,30,
+                            5,5,5,30,
+                            5,5,5,30,
+                            5,5,5,30,
+                        ],
+                    });
+
+                    uniforms.u_lightColor = [.2, .2, .2, .5];
+                    uniforms.u_ambient = [0.2, 0.2, 0.2, 0];
+                    uniforms.u_specular = [1, 1, 1, 1];
+                    uniforms.u_shininess = 50;
+                    uniforms.u_specularFactor = 0.1;
+                    uniforms.u_diffuse = tex;
+
+                    var t = [15, 0, 0];
+                    var y = 0.0012;
+                    var z = 0;
+                }
+                if(i == 12){
+                    id = "uranus_rings";
+                    programInfo = twgl.createProgramInfo(gl, [V, F]);
+                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, .5,64,0,0.49);
+
+                    const tex = twgl.createTexture(gl, {
+                        mag: gl.NEAREST,
+                        min: gl.LINEAR,
+                        src: [
+                            5,5,5,30,
+                            5,5,5,30,
+                            5,5,5,30,
+                            5,5,5,30,
+                        ],
+                    });
+
+                    uniforms.u_lightColor = [.2, .2, .2, .5];
+                    uniforms.u_ambient = [0.2, 0.2, 0.2, 0];
+                    uniforms.u_specular = [1, 1, 1, 1];
+                    uniforms.u_shininess = 50;
+                    uniforms.u_specularFactor = 0.1;
+                    uniforms.u_diffuse = tex;
+
+                    var t = [15, 0, 0];
+                    var y = 0.0012;
+                    var z = 0;
+                }
+                if(i == 13){
+                    id = "neptune";
                     programInfo = twgl.createProgramInfo(gl, [V, F]);
                     bufferInfo = twgl.primitives.createSphereBufferInfo(gl, .3, 48, 24);
 
@@ -650,10 +731,10 @@
                     uniforms.u_diffuse = tex;
 
                     var t = [17, 0, 0];
-                    var y = 0.001;
+                    var y = 0.0010;
                     var z = 0;
                 }
-                if(i == 11){
+                if(i == 14){
                     id = "pluto";
                     programInfo = twgl.createProgramInfo(gl, [V, F]);
                     bufferInfo = twgl.primitives.createSphereBufferInfo(gl, .02, 48, 24);
@@ -672,10 +753,10 @@
                     uniforms.u_diffuse = tex;
 
                     var t = [18, 0, 0];
-                    var y = 0.001;
+                    var y = 0.0007;
                     var z = 0;
                 }
-                if(i == 12){
+                if(i == 15){
                     id = "background";
                     programInfo = twgl.createProgramInfo(gl, ["vs-b", "fs-b"]);
                     bufferInfo = twgl.primitives.createXYQuadBufferInfo(gl);
@@ -832,7 +913,7 @@
                 if(i == 9){
                     id = "pluto_orbit";
                     programInfo = twgl.createProgramInfo(gl, [V, F]);
-                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 18.02,64,0,17.99);
+                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 18.01,64,0,17.99);
 
                     var t = [0, 0, 0];
                     var y = 0;
@@ -924,11 +1005,11 @@
                     m4.rotateY(world, time * obj.ySpeed, world);//translation around the sun
                     m4.translate(world, obj.translation, world);//position
                     if (obj.ID == "venus"){
-                        m4.rotateY(world, time * obj.ySpeed * -5, world);//inverse rotation from venus's axis
+                        m4.rotateY(world, time * -0.1, world);//inverse rotation from venus's axis
                     }
                     if (obj.ID == "earth"){
                         m4.rotateZ(world, .2, world);//earth's weird angle
-                        m4.rotateY(world, time * obj.ySpeed * 1000, world);//rotation from earth's axis
+                        m4.rotateY(world, time * 10, world);//rotation from earth's axis
 						if(earthTarget == true){
 							var currT = v3.create();
 							m4.getTranslation(world,currT);
@@ -937,20 +1018,34 @@
 							tar[2][0] = currT[2];
 						}
                     }
-                    if (obj.ID == "mars"){
-                        m4.rotateY(world, time * obj.ySpeed * 2000, world);//rotation from mars's axis
-                    }
                     if (obj.ID == "moon"){//this makes the moon's orbit around earth
-                        m4.rotateY(world, time * obj.ySpeed * 25, world);
+                        m4.rotateY(world, time * 0.25, world);
                         m4.translate(world, [.3,0,0], world);
                     }
+                    if (obj.ID == "mars"){
+                        m4.rotateY(world, time * 9, world);//rotation from mars's axis
+                    }
+                    if (obj.ID == "jupiter"){
+                        m4.rotateY(world, time * 22, world);//rotation from jupiter's axis
+                    }
                     if (obj.ID == "saturn"){
-                        m4.rotateX(world, -.2, world);//adding and alge to the rinds
-                        m4.rotateY(world, time * obj.ySpeed * 500, world);//rotation from saturn's axis
+                        m4.rotateX(world, -.2, world);//adding and alge
+                        m4.rotateY(world, time * 18, world);//rotation from saturn's axis
                     }
                     if (obj.ID == "saturn_rings"){
-                        m4.rotateX(world, -.2, world);//adding and alge to the rinds
-                        m4.rotateY(world, time * obj.ySpeed * 500, world);//rotation from saturn's axis
+                        m4.rotateX(world, -.2, world);//adding and angle to the rinds
+                        m4.rotateY(world, time * 18, world);//rotation from saturn's axis
+                    }
+                    if (obj.ID == "uranus"){
+                        m4.rotateY(world, time * -13, world);//rotation from uranus's axis
+                    }
+                    if (obj.ID == "uranus_rings"){
+                        //m4.rotateX(world, -.5, world);//adding and angle to the rinds
+                        m4.rotateZ(world, -1.7, world);
+                        m4.rotateY(world, time * 18, world);//rotation from saturn's axis
+                    }
+                    if (obj.ID == "neptune"){
+                        m4.rotateY(world, time * 15, world);//rotation from neptune's axis
                     }
                     m4.rotateZ(world, time * obj.zSpeed, world);
                     //m4.rotateX(world, time, world);
