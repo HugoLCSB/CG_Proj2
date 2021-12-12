@@ -121,6 +121,8 @@
         uniform float u_shininess;
         uniform float u_specularFactor;
 
+        uniform int u_lightMode;
+
         vec4 lit(float l ,float h, float m) {
             return vec4(1.0,
                         max(l, 0.0),
@@ -136,10 +138,38 @@
             vec3 halfVector = normalize(surfaceToLight + surfaceToView);
             vec4 litR = lit(dot(a_normal, surfaceToLight),
                                 dot(a_normal, halfVector), u_shininess);
-            vec4 outColor = vec4((
-            u_lightColor * (diffuseColor * litR.y + diffuseColor * u_ambient +
+
+            //normal
+            vec4 outColor = vec4((u_lightColor * (diffuseColor * litR.y + diffuseColor * u_ambient +
                             u_specular * litR.z * u_specularFactor)).rgb,
-                diffuseColor.a);
+                              diffuseColor.a);
+
+            //ambiente + difusa
+            if(u_lightMode == 1){
+                outColor = vec4((u_lightColor * (diffuseColor * litR.y + diffuseColor * u_ambient)).rgb,
+                                diffuseColor.a);
+            }
+
+            //ambiente
+            if(u_lightMode == 2){
+                outColor = vec4((u_lightColor * (litR.y + u_ambient +
+                                litR.z)).rgb,
+                                1.0);
+            }
+
+            //difusa
+            if(u_lightMode == 3){
+                outColor = vec4((u_lightColor * (diffuseColor * litR.y + diffuseColor)).rgb,
+                                diffuseColor.a);
+            }
+
+            //especular
+            if(u_lightMode == 4){
+                outColor = vec4((u_lightColor * (litR.y +
+                                u_specular * litR.z * u_specularFactor)).rgb,
+                                1.0);
+            }
+
             if (diffuseColor.a < 0.1){
                 discard;
             }
@@ -178,6 +208,8 @@
         uniform float u_shininess;
         uniform float u_specularFactor;
 
+        uniform int u_lightMode;
+
         varying vec4 color; //color
 
         vec4 lit(float l ,float h, float m) {
@@ -203,10 +235,40 @@
             vec3 halfVector = normalize(surfaceToLight + surfaceToView);
             vec4 litR = lit(dot(a_normal, surfaceToLight),
                                 dot(a_normal, halfVector), u_shininess);
+
+            //normal
             vec4 outColor = vec4((
             u_lightColor * (diffuseColor * litR.y + diffuseColor * u_ambient +
                             u_specular * litR.z * u_specularFactor)).rgb,
                 diffuseColor.a);
+    
+            //ambiente + difusa
+            if(u_lightMode == 1){
+                outColor = vec4((u_lightColor * (diffuseColor * litR.y + diffuseColor * u_ambient)).rgb,
+                                diffuseColor.a);
+            }
+
+            //ambiente
+            if(u_lightMode == 2){
+                outColor = vec4((u_lightColor * (litR.y + u_ambient +
+                                litR.z)).rgb,
+                                1.0);
+            }
+
+            //difusa
+            if(u_lightMode == 3){
+                outColor = vec4((u_lightColor * (diffuseColor * litR.y + diffuseColor)).rgb,
+                                diffuseColor.a);
+            }
+
+            //especular
+            if(u_lightMode == 4){
+                outColor = vec4((u_lightColor * (litR.y +
+                                u_specular * litR.z * u_specularFactor)).rgb,
+                                1.0);
+            }
+
+
             //if (diffuseColor.a < 0.1){
             //    discard;
             //}
@@ -264,6 +326,7 @@
         var V = "vs";
         var F = "fs";
         var hasOrbits = false;
+        var lightMode = 0;
 		
 		window.onkeypress = function (e) {
 			switch(e.key) {
@@ -312,6 +375,24 @@
                     }
                     elms();
                     render(time);
+                    break;
+                case "m":
+                    if(lightMode == 0){
+                        lightMode ++;
+                    }
+                    else if(lightMode == 5){
+                        lightMode = 0;
+                    }
+                    cancelAnimationFrame(id_Render);
+                    objects = [];
+                    drawObjects = [];
+                    if(hasOrbits){
+                        orbits();
+                    }
+                    elms();
+                    render(time);
+                    lightMode ++;
+                    console.log(lightMode);
                     break;
 			}
 		}
@@ -409,6 +490,8 @@
                     u_world: m4.identity(),
                     u_worldInverseTranspose: m4.identity(),
                     u_worldViewProjection: m4.identity(),
+
+                    u_lightMode: lightMode,
                 };
 
                 if(i == 0){
@@ -827,6 +910,8 @@
                     u_world: m4.identity(),
                     u_worldInverseTranspose: m4.identity(),
                     u_worldViewProjection: m4.identity(),
+
+                    u_lightMode: lightMode,
                 };
 
                 if(i == 0){
