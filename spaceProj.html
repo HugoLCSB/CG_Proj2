@@ -219,7 +219,7 @@
         varying vec4 color;
         void main() {
             gl_FragColor = color;
-            gl_FragColor.rgb *= color.a;
+            //gl_FragColor.rgb *= color.a;
         }
     </script>
 
@@ -281,11 +281,10 @@
 					eyeV[1][0] = 0;
 					eyeV[2][0] = -10;
 					break;
-                case "g":
+                case "s":
                     if(V == "vs"){
                         V = "vs-g"
                         F = "fs-g"
-                        gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
                     }
                     else{
                         V = "vs"
@@ -294,6 +293,9 @@
                     cancelAnimationFrame(id_Render);
                     objects = [];
                     drawObjects = [];
+                    if(hasOrbits){
+                        orbits();
+                    }
                     elms();
                     render(time);
                     break;
@@ -382,7 +384,7 @@
         var objects = [];
         var drawObjects = [];
         const numObjects = 9;
-        const numOrbits = 6;
+        const numOrbits = 7;
 
         const viewDirection = m4.identity();
         const viewDirectionProjection = m4.identity();
@@ -565,7 +567,7 @@
                 }
                 if(i == 7){
                     id = "saturn_rings";
-                    programInfo = twgl.createProgramInfo(gl, [V, F]);
+                    programInfo = twgl.createProgramInfo(gl, ["vs", "fs"]);
                     bufferInfo = twgl.primitives.createPlaneBufferInfo(gl, 2,2);
 
                     const tex = twgl.createTexture(gl, {
@@ -650,12 +652,17 @@
                 if(i == 0){
                     id = "mercury_orbit";
                     programInfo = twgl.createProgramInfo(gl, [V, F]);
-                    bufferInfo = twgl.primitives.createPlaneBufferInfo(gl, 4.55,4.55);
+                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 2.25,64,0,2.24);
 
                     const tex = twgl.createTexture(gl, {
                         mag: gl.NEAREST,
-                        min: gl.NEAREST,
-                        src:"textures/orbit2.png",
+                        min: gl.LINEAR,
+                        src: [
+                            255,255,255,255,
+                            255,255,255,255,
+                            255,255,255,255,
+                            255,255,255,255,
+                        ],
                     });
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
@@ -672,12 +679,17 @@
                 if(i == 1){
                     id = "venus_orbit";
                     programInfo = twgl.createProgramInfo(gl, [V, F]);
-                    bufferInfo = twgl.primitives.createPlaneBufferInfo(gl, 5.7,5.7);
+                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 2.8,64,0,2.79);
 
                     const tex = twgl.createTexture(gl, {
                         mag: gl.NEAREST,
-                        min: gl.NEAREST,
-                        src:"textures/orbit2.png",
+                        min: gl.LINEAR,
+                        src: [
+                            255,255,255,255,
+                            255,255,255,255,
+                            255,255,255,255,
+                            255,255,255,255,
+                        ],
                     });
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
@@ -694,12 +706,17 @@
                 if(i == 2){
                     id = "earth_orbit";
                     programInfo = twgl.createProgramInfo(gl, [V, F]);
-                    bufferInfo = twgl.primitives.createPlaneBufferInfo(gl, 7.13,7.13);
+                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 3.5,64,0,3.49);
 
                     const tex = twgl.createTexture(gl, {
                         mag: gl.NEAREST,
-                        min: gl.NEAREST,
-                        src:"textures/orbit2.png",
+                        min: gl.LINEAR,
+                        src: [
+                            255,255,255,255,
+                            255,255,255,255,
+                            255,255,255,255,
+                            255,255,255,255,
+                        ],
                     });
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
@@ -716,12 +733,17 @@
                 if(i == 3){
                     id = "moon_orbit";
                     programInfo = twgl.createProgramInfo(gl, [V, F]);
-                    bufferInfo = twgl.primitives.createPlaneBufferInfo(gl, 0.61,0.61);
+                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, .31,64,0,0.30);
 
                     const tex = twgl.createTexture(gl, {
                         mag: gl.NEAREST,
-                        min: gl.NEAREST,
-                        src:"textures/orbit2.png",
+                        min: gl.LINEAR,
+                        src: [
+                            255,255,255,255,
+                            255,255,255,255,
+                            255,255,255,255,
+                            255,255,255,255,
+                        ],
                     });
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
@@ -738,12 +760,17 @@
                 if(i == 4){
                     id = "mars_orbit";
                     programInfo = twgl.createProgramInfo(gl, [V, F]);
-                    bufferInfo = twgl.primitives.createPlaneBufferInfo(gl, 8.7,8.7);
+                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 4.3,64,0,4.29);
 
                     const tex = twgl.createTexture(gl, {
                         mag: gl.NEAREST,
-                        min: gl.NEAREST,
-                        src:"textures/orbit2.png",
+                        min: gl.LINEAR,
+                        src: [
+                            255,255,255,255,
+                            255,255,255,255,
+                            255,255,255,255,
+                            255,255,255,255,
+                        ],
                     });
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
@@ -758,14 +785,46 @@
                     var z = 0;
                 }
                 if(i == 5){
-                    id = "saturn_orbit";
+                    id = "jupiter_orbit";
                     programInfo = twgl.createProgramInfo(gl, [V, F]);
-                    bufferInfo = twgl.primitives.createPlaneBufferInfo(gl, 12.3,12.3);
+                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 5,64,0,4.99);
 
                     const tex = twgl.createTexture(gl, {
                         mag: gl.NEAREST,
-                        min: gl.NEAREST,
-                        src:"textures/orbit2.png",
+                        min: gl.LINEAR,
+                        src: [
+                            255,255,255,255,
+                            255,255,255,255,
+                            255,255,255,255,
+                            255,255,255,255,
+                        ],
+                    });
+
+                    uniforms.u_lightColor = [1, 1, 1, 1];
+                    uniforms.u_ambient = [0.5, 0.5, 0.5, 1];
+                    uniforms.u_specular = [1, 1, 1, 1];
+                    uniforms.u_shininess = 50;
+                    uniforms.u_specularFactor = 0.1;
+                    uniforms.u_diffuse = tex;
+
+                    var t = [0, 0, 0];
+                    var y = 0;
+                    var z = 0;
+                }
+                if(i == 6){
+                    id = "saturn_orbit";
+                    programInfo = twgl.createProgramInfo(gl, [V, F]);
+                    bufferInfo = twgl.primitives.createDiscBufferInfo(gl, 6,64,0,5.99);
+
+                    const tex = twgl.createTexture(gl, {
+                        mag: gl.NEAREST,
+                        min: gl.LINEAR,
+                        src: [
+                            255,255,255,255,
+                            255,255,255,255,
+                            255,255,255,255,
+                            255,255,255,255,
+                        ],
                     });
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
