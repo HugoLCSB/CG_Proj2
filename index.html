@@ -529,7 +529,7 @@
                 var uniforms = {
                     u_lightWorldPos: [0, 0, 0],
                     u_lightColor: [],
-                    u_ambient: [],
+                    u_ambient: [.3,.3,.3,0],
                     u_specular: [1, 1, 1, 1],
                     u_shininess: 50,
                     u_specularFactor: .1,
@@ -575,7 +575,7 @@
                     });
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
-                    uniforms.u_ambient = [0.6, 0.6, 0.6, 0];
+                    //uniforms.u_ambient = [0.6, 0.6, 0.6, 0];
                     uniforms.u_diffuse = tex;
 
                     var t = [4.7, 0, 0];
@@ -594,7 +594,7 @@
                     });
 
                     uniforms.u_lightColor = [.8, 1, 1, 1];
-                    uniforms.u_ambient = [0.6, 0.6, 0.6, 0];
+                    //uniforms.u_ambient = [0.6, 0.6, 0.6, 0];
                     uniforms.u_diffuse = tex;
 
                     var t = [5.5, 0, 0];
@@ -613,7 +613,7 @@
                     });
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
-                    uniforms.u_ambient = [0.5, 0.5, 0.5, 0];
+                    //uniforms.u_ambient = [0.5, 0.5, 0.5, 0];
                     uniforms.u_diffuse = tex;
 
                     var t = [6.2, 0, 0];
@@ -632,7 +632,7 @@
                     });
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
-                    uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
+                    //uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
                     uniforms.u_diffuse = tex;
 
                     var t = [6.2, 0, 0];
@@ -651,7 +651,7 @@
                     });
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
-                    uniforms.u_ambient = [0.5, 0.5, 0.5, 0];
+                    //uniforms.u_ambient = [0.5, 0.5, 0.5, 0];
                     uniforms.u_diffuse = tex;
 
                     var t = [7, 0, 0];
@@ -670,7 +670,7 @@
                     });
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
-                    uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
+                    //uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
                     uniforms.u_diffuse = tex;
 
                     var t = [10, 0, 0];
@@ -689,7 +689,7 @@
                     });
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
-                    uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
+                    //uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
                     uniforms.u_diffuse = tex;
 
                     var t = [12.5, 0, 0];
@@ -727,7 +727,7 @@
                     });
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
-                    uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
+                    //uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
                     uniforms.u_diffuse = tex;
 
                     var t = [15, 0, 0];
@@ -761,7 +761,7 @@
                     });
 
                     uniforms.u_lightColor = [.2, .2, .2, .5];
-                    uniforms.u_ambient = [0.2, 0.2, 0.2, 0];
+                    //uniforms.u_ambient = [0.2, 0.2, 0.2, 0];
                     uniforms.u_diffuse = tex;
 
                     var t = [15, 0, 0];
@@ -780,7 +780,7 @@
                     });
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
-                    uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
+                    //uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
                     uniforms.u_diffuse = tex;
 
                     var t = [17, 0, 0];
@@ -799,7 +799,7 @@
                     });
 
                     uniforms.u_lightColor = [1, 1, 1, 1];
-                    uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
+                    //uniforms.u_ambient = [0.4, 0.4, 0.4, 0];
                     uniforms.u_diffuse = tex;
 
                     var t = [18, 0, 0];
@@ -1074,8 +1074,8 @@
 
                     m4.identity(world);
                     if (obj.ID == "asteroid"){
-                        m4.rotateY(world, counter *0.05, world);//translation around the sun
-                        m4.translate(world, [(7.6 + counter*0.0004),0,0], world);//position
+                        m4.rotateY(world, counter *obj.ySpeed, world);//translation around the sun
+                        m4.translate(world, [(7.6 + counter*0.0004),0,0], world);//position relative to the sun, each one slightly farther away
                         m4.rotateY(world, obj.ySpeed, world);
                         m4.rotateZ(world, obj.zSpeed, world);
                         m4.scale(world,obj.translation,world);
