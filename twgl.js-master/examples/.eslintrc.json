@@ -1,0 +1,16 @@
+{
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "rules": {
+    "strict": [0, "global"]
+  },
+  "overrides": [
+    {
+      "files": ["modules-full.html"],
+      "parserOptions": {
+        "sourceType": "module"
+      }
+    }
+  ]
+}

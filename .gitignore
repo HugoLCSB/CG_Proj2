@@ -1,5 +1,2 @@
 #Ignore Mac system files.
 .DS_store
-
-#Ignore Twgl library
-twgl.js-master
